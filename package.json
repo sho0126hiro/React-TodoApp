@@ -1,0 +1,23 @@
+{
+  "name": "React-TodoApp",
+  "version": "1.0.0",
+  "description": "React.jsでTodoApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sho0126hiro/React-TodoApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sho0126hiro/React-TodoApp/issues"
+  },
+  "homepage": "https://github.com/sho0126hiro/React-TodoApp#readme",
+  "devDependencies": {
+    "@babel/core": "^7.4.5"
+  }
+}
