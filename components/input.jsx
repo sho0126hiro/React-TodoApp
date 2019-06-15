@@ -19,6 +19,7 @@ export default class Input extends Component {
     render() {
         return (
             <div>
+                <button onClick={() => this.props.onAllCompleted()}>👅</button>
                 <input type="text" value={this.state.value} onChange={this.changeItem}
                         onKeyDown={(e)=>this.addItem(e)}/>
             </div>
