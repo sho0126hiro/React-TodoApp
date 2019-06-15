@@ -25856,21 +25856,6 @@ function _getPrototypeOf(o) {
   };
   return _getPrototypeOf(o);
 }
-},{}],"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _assertThisInitialized;
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
 },{}],"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js":[function(require,module,exports) {
 "use strict";
 
@@ -25929,8 +25914,6 @@ var _possibleConstructorReturn2 = _interopRequireDefault(require("C:\\Users\\sho
 
 var _getPrototypeOf2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/getPrototypeOf"));
 
-var _assertThisInitialized2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/assertThisInitialized"));
-
 var _inherits2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/inherits"));
 
 var _react = _interopRequireWildcard(require("react"));
@@ -25951,36 +25934,26 @@ function (_Component) {
 
     (0, _classCallCheck2.default)(this, Input);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Input).call(this, props));
-    _this.state = {
-      item: '',
-      flg: false
+
+    _this.changeItem = function (event) {
+      _this.setState({
+        value: event.target.value
+      });
     };
-    _this.ChangeItem = _this.ChangeItem.bind((0, _assertThisInitialized2.default)(_this));
+
+    _this.state = {
+      value: ''
+    };
     return _this;
   }
 
   (0, _createClass2.default)(Input, [{
-    key: "ChangeItem",
-    value: function ChangeItem(event) {
-      this.setState({
-        item: event.target.value
-      });
-    }
-  }, {
-    key: "AddItem",
-    value: function AddItem(event) {
-      if (event.keyCode === 13) {
-        var items = JSON.parse(localStorage.getItem('tasks'));
-
-        if (items == null) {
-          items = [this.state.item];
-        } else {
-          items.push(this.state.item);
-        }
-
-        this.props.onAddTask(items);
+    key: "addItem",
+    value: function addItem(event) {
+      if (event.key === 'Enter') {
+        this.props.onAddTask(this.state.value);
         this.setState({
-          item: ''
+          value: ''
         });
       }
     }
@@ -25992,19 +25965,19 @@ function (_Component) {
       return _react.default.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 28
+          lineNumber: 21
         },
         __self: this
       }, _react.default.createElement("input", {
         type: "text",
-        value: this.state.item,
-        onChange: this.ChangeItem,
+        value: this.state.value,
+        onChange: this.changeItem,
         onKeyDown: function onKeyDown(e) {
-          return _this2.AddItem(e);
+          return _this2.addItem(e);
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 29
+          lineNumber: 22
         },
         __self: this
       }));
@@ -26014,65 +25987,6 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Input;
-},{"C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/classCallCheck":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/createClass":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createClass.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/possibleConstructorReturn":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/getPrototypeOf":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/assertThisInitialized":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/inherits":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/inherits.js","react":"../../node_modules/react/index.js"}],"components/deleteButton.jsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/inherits"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _jsxFileName = "C:\\Users\\sho01\\OneDrive\\Documents\\GitHub\\React-TodoApp\\components\\deleteButton.jsx";
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var DeleteButton =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(DeleteButton, _Component);
-
-  function DeleteButton(props) {
-    (0, _classCallCheck2.default)(this, DeleteButton);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(DeleteButton).call(this, props));
-  }
-
-  (0, _createClass2.default)(DeleteButton, [{
-    key: "render",
-    value: function render() {
-      return _react.default.createElement("div", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 10
-        },
-        __self: this
-      }, _react.default.createElement("button", {
-        onClick: this.props.deleteTask(this.props.index),
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 11
-        },
-        __self: this
-      }, "delete"));
-    }
-  }]);
-  return DeleteButton;
-}(_react.Component);
-
-exports.default = DeleteButton;
 },{"C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/classCallCheck":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/createClass":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createClass.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/possibleConstructorReturn":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/getPrototypeOf":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/inherits":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/inherits.js","react":"../../node_modules/react/index.js"}],"components/list.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -26081,97 +25995,65 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _classCallCheck2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/inherits"));
-
 var _react = _interopRequireWildcard(require("react"));
-
-var _deleteButton = _interopRequireDefault(require("./deleteButton"));
 
 var _jsxFileName = "C:\\Users\\sho01\\OneDrive\\Documents\\GitHub\\React-TodoApp\\components\\list.jsx";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _default = function _default(props) {
+  if (props.tasks.length == 0) return _react.default.createElement("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 3
+    },
+    __self: this
+  }, _react.default.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 3
+    },
+    __self: this
+  }, "NONE"));
+  return _react.default.createElement("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 5
+    },
+    __self: this
+  }, _react.default.createElement("ul", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 6
+    },
+    __self: this
+  }, props.tasks.map(function (item, i) {
+    return _react.default.createElement("div", {
+      key: i,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 8
+      },
+      __self: this
+    }, _react.default.createElement("li", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 9
+      },
+      __self: this
+    }, item), _react.default.createElement("button", {
+      onClick: props.onDeleteTask,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 10
+      },
+      __self: this
+    }, "x"));
+  })));
+};
 
-var List =
-/*#__PURE__*/
-function (_Component) {
-  (0, _inherits2.default)(List, _Component);
-
-  function List(props) {
-    (0, _classCallCheck2.default)(this, List);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(List).call(this, props));
-  }
-
-  (0, _createClass2.default)(List, [{
-    key: "render",
-    value: function render() {
-      var _this = this;
-
-      if (this.props.tasks == null) return _react.default.createElement("div", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 10
-        },
-        __self: this
-      }, _react.default.createElement("p", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 10
-        },
-        __self: this
-      }, "NONE"));else {
-        return _react.default.createElement("div", {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 13
-          },
-          __self: this
-        }, _react.default.createElement("ul", {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 14
-          },
-          __self: this
-        }, this.props.tasks.map(function (item, i) {
-          return _react.default.createElement("div", {
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 16
-            },
-            __self: this
-          }, _react.default.createElement("li", {
-            key: i,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 17
-            },
-            __self: this
-          }, item), _react.default.createElement("button", {
-            onClick: _this.props.onDeleteTask,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 18
-            },
-            __self: this
-          }));
-        })));
-      }
-    }
-  }]);
-  return List;
-}(_react.Component);
-
-exports.default = List;
-},{"C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/classCallCheck":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/createClass":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createClass.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/possibleConstructorReturn":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/getPrototypeOf":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/inherits":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/inherits.js","react":"../../node_modules/react/index.js","./deleteButton":"components/deleteButton.jsx"}],"app.jsx":[function(require,module,exports) {
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js"}],"components/app.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -26187,17 +26069,15 @@ var _possibleConstructorReturn2 = _interopRequireDefault(require("C:\\Users\\sho
 
 var _getPrototypeOf2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/getPrototypeOf"));
 
-var _assertThisInitialized2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/assertThisInitialized"));
-
 var _inherits2 = _interopRequireDefault(require("C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/inherits"));
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _input = _interopRequireDefault(require("./components/input"));
+var _input = _interopRequireDefault(require("./input"));
 
-var _list = _interopRequireDefault(require("./components/list"));
+var _list = _interopRequireDefault(require("./list"));
 
-var _jsxFileName = "C:\\Users\\sho01\\OneDrive\\Documents\\GitHub\\React-TodoApp\\app.jsx";
+var _jsxFileName = "C:\\Users\\sho01\\OneDrive\\Documents\\GitHub\\React-TodoApp\\components\\app.jsx";
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -26213,39 +26093,49 @@ function (_Component) {
 
     (0, _classCallCheck2.default)(this, App);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(App).call(this, props));
-    _this.state = {
-      tasks: null
+
+    _this.addTask = function (item) {
+      var tasks = JSON.parse(localStorage.getItem('tasks'));
+      if (tasks == null) tasks = [item];else tasks.push(item);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+
+      _this.setState({
+        tasks: tasks
+      });
     };
-    _this.addTask = _this.addTask.bind((0, _assertThisInitialized2.default)(_this));
-    _this.deleteTask = _this.deleteTask.bind((0, _assertThisInitialized2.default)(_this));
+
+    _this.deleteTask = function () {// alert("hoge")
+    };
+
+    _this.state = {
+      tasks: []
+    };
     return _this;
   }
 
   (0, _createClass2.default)(App, [{
-    key: "addTask",
-    value: function addTask(item) {
-      localStorage.setItem('tasks', JSON.stringify(item));
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var items = JSON.parse(localStorage.getItem('tasks'));
       this.setState({
-        tasks: item
+        tasks: items
       });
-    }
-  }, {
-    key: "deleteTask",
-    value: function deleteTask(index) {}
+    } // タスクの追加　Input Component で使われる
+
   }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 21
+          lineNumber: 31
         },
         __self: this
       }, _react.default.createElement(_input.default, {
         onAddTask: this.addTask,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 22
+          lineNumber: 32
         },
         __self: this
       }), _react.default.createElement(_list.default, {
@@ -26253,7 +26143,7 @@ function (_Component) {
         onDeleteTask: this.deleteTask,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 25
+          lineNumber: 35
         },
         __self: this
       }));
@@ -26263,14 +26153,14 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = App;
-},{"C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/classCallCheck":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/createClass":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createClass.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/possibleConstructorReturn":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/getPrototypeOf":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/assertThisInitialized":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/inherits":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/inherits.js","react":"../../node_modules/react/index.js","./components/input":"components/input.jsx","./components/list":"components/list.jsx"}],"index.jsx":[function(require,module,exports) {
+},{"C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/classCallCheck":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/createClass":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createClass.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/possibleConstructorReturn":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/getPrototypeOf":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js","C:\\Users\\sho01\\OneDrive\\Documents\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\runtime/helpers/esm/inherits":"../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/inherits.js","react":"../../node_modules/react/index.js","./input":"components/input.jsx","./list":"components/list.jsx"}],"index.jsx":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
-var _app = _interopRequireDefault(require("./app"));
+var _app = _interopRequireDefault(require("./components/app"));
 
 var _jsxFileName = "C:\\Users\\sho01\\OneDrive\\Documents\\GitHub\\React-TodoApp\\index.jsx";
 
@@ -26283,7 +26173,7 @@ _reactDom.default.render(_react.default.createElement(_app.default, {
   },
   __self: void 0
 }), document.getElementById('app'));
-},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","./app":"app.jsx"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","./components/app":"components/app.jsx"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -26311,7 +26201,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49870" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51175" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

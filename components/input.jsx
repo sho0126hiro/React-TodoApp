@@ -3,31 +3,24 @@ import React, { Component } from 'react';
 export default class Input extends Component {
     constructor(props){
         super(props);
-        this.state = {item:'',flg:false};
-        this.ChangeItem = this.ChangeItem.bind(this);
+        this.state = {value:''};
     }
     
-    ChangeItem(event){
-        this.setState({item:event.target.value});
+    changeItem = (event) => {
+        this.setState({value:event.target.value});
     }
 
-    AddItem(event){
-        if(event.keyCode === 13){
-            let items = JSON.parse(localStorage.getItem('tasks'));
-            if(items==null){
-                items=[this.state.item];
-            }else{
-                items.push(this.state.item);
-            }
-            this.props.onAddTask(items);
-            this.setState({item:''});
+    addItem(event){
+        if(event.key === 'Enter'){
+            this.props.onAddTask(this.state.value);
+            this.setState({value:''});
         }
     }
     render() {
         return (
             <div>
-                <input type="text" value={this.state.item} onChange={this.ChangeItem}
-                        onKeyDown={(e)=>this.AddItem(e)}/>
+                <input type="text" value={this.state.value} onChange={this.changeItem}
+                        onKeyDown={(e)=>this.addItem(e)}/>
             </div>
     );
   }
