@@ -2,149 +2,151 @@ import React, { Component } from 'react';
 import Input from './input';
 import List from './list';
 import TodoFooter from './todoFooter';
-// import Footer from './footer';
+import { FILTER_TYPE_ALL, FILTER_TYPE_ACTIVE, FILTER_TYPE_COMPLETED} from './visibilityFilterType'
+import Footer from './footer';
 
 export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { tasks: [], 
 					   numOfLeft: 0, 
-					   viewType:'All',
-					   doubleClickIndex : -1
+					   visibilityFilter:FILTER_TYPE_ALL,
+					   editingTaskID : -1
 					};
-        /**
-         * tasks [ { value : "input_value" ,
-         *           type  : type ("Active" or "Completed") } ]
-		 * viewType : "All" or "Active" or "Completed"
-         */
 	}
 
-	// LocalStrageにタスクをセット
-	SetTask(task) {
+	SaveTasks(task) {
 		localStorage.setItem('tasks', JSON.stringify(task));
 	}
-	// LocalStrageからタスクを取得
-	GetTask() {
+	LoadTasks() {
 		return JSON.parse(localStorage.getItem('tasks'));
 	}
-
-	// LocalStrageにViewTypeをセット
-	SetViewType(viewType){
-		localStorage.setItem('viewType',viewType);
+	SetVisibilityFilter(visibilityFilter){
+		localStorage.setItem('visibilityFilter',visibilityFilter);
 	}
-	// LocalStrageからViewTypeを取得
-	GetViewType(){
-		return localStorage.getItem('viewType');
+	GetVisibilityFilter(){
+		return localStorage.getItem('visibilityFilter');
 	}
 
 	componentDidMount() {
-		let items = this.GetTask();
+		let items = this.LoadTasks();
 		if (items === null){
 			items = [];
 		}else{
 			// numOfLeftの初期値を定める
 			let initValue = 0;
 			items.forEach((item, i) => {
-				if (item.type === "Active") initValue++;
+				if (item.visibilityFilter === FILTER_TYPE_ACTIVE) initValue++;
 			});
 			this.setState({ tasks: items, numOfLeft: initValue });
 		}
-		// viewTypeの初期値を取得する
-		let viewType = this.GetViewType();
-		if(viewType) this.setState({viewType:viewType});
-		else         this.SetViewType('All');
+		// visibilityFilterの初期値を取得する
+		let visibilityFilter = this.GetVisibilityFilter() || FILTER_TYPE_ALL;
+		this.setState({visibilityFilter})
 	}
 
-	// タスクの追加　Input Component で使われる
+	// ---------------------- task ----------------------
 	addTask = (value) => {
 		let tasks = [...this.state.tasks];
-		// let item = value;
 		let item = {
 			value: value,
-			type: "Active"
+			visibilityFilter: FILTER_TYPE_ACTIVE
 		}
 		if (tasks === null) tasks = [item];
 		else tasks.push(item);
-		this.SetTask(tasks);
+		this.SaveTasks(tasks);
 		this.setState({ tasks: tasks, numOfLeft: this.state.numOfLeft + 1 });
 	}
 
 	deleteTask = (index) => {
 		let tasks = [...this.state.tasks];
 		const updated = tasks.filter(n => n != tasks[index]);
-		localStorage.setItem('tasks', JSON.stringify(updated));
-		if (tasks[index].type === "Active") this.setState({ tasks: updated, numOfLeft: this.state.numOfLeft - 1 });
+		this.SaveTasks(updated);
+		if (tasks[index].visibilityFilter === FILTER_TYPE_ACTIVE) this.setState({ tasks: updated, numOfLeft: this.state.numOfLeft - 1 });
 		else this.setState({ tasks: updated });
 	}
 
-	editTask = (index) => {
-		this.setState({doubleClickIndex:index});
+	setEditingTaskID = (index) => {
+		this.setState({editingTaskID:index});
 	}
 	
-	resetEditTask = () => {
-		this.setState({doubleClickIndex:-1});
+	resetEditingTaskID = () => {
+		this.setState({editingTaskID:-1});
 	}
 
-	allCompletedTask = () => {
+	editTask = (item) => {
+		let tasks = [...this.state.tasks];
+		let newTask = {
+			value: item,
+			visibilityFilter: this.state.tasks[this.state.editingTaskID].visibilityFilter
+		}
+		tasks.splice(this.state.editingTaskID,1,newTask);
+		this.SaveTasks(tasks);
+		this.setState({tasks});
+	}
+
+	markAllAsCompletedTasks = () => {
 		let tasks = [...this.state.tasks];
 		tasks.forEach((item,i) => {
-			if(item.type === "Active") item.type = "Completed";
+			if(item.visibilityFilter === FILTER_TYPE_ACTIVE) item.visibilityFilter = FILTER_TYPE_COMPLETED;
 		})
 		this.setState({tasks:tasks,numOfLeft:0});
 	}
-
-	// Active <=> Completed 切り替え
-	switchTaskType = (index) => {
+	
+	deleteCompletedTasks = () => {
 		let tasks = [...this.state.tasks];
-		switch (tasks[index].type) {
-			case "Active":
-				tasks[index].type = "Completed";
+		let update = tasks.filter(item => item.visibilityFilter != FILTER_TYPE_COMPLETED);
+		this.SaveTasks(update);
+		this.setState({ tasks: update });
+	}
+
+	// ---------------------- visibleFilter ----------------------
+	switchVisibilityFilter = (index) => {
+		let tasks = [...this.state.tasks];
+		switch (tasks[index].visibilityFilter) {
+			case FILTER_TYPE_ACTIVE:
+				tasks[index].visibilityFilter = FILTER_TYPE_COMPLETED;
 				this.setState({ numOfLeft: this.state.numOfLeft - 1 })
 				break;
-			case "Completed":
-				tasks[index].type = "Active";
+			case FILTER_TYPE_COMPLETED:
+				tasks[index].visibilityFilter = "Active";
 				this.setState({ numOfLeft: this.state.numOfLeft + 1 })
 				break;
 		}
-		this.SetTask(tasks);
+		this.SaveTasks(tasks);
 		this.setState({ tasks: tasks });
 	}
 	
-	changeViewType = (viewType) => {
-		this.SetViewType(viewType);
-		this.setState({viewType:viewType});
+	changeVisibilityFilter = (visibilityFilter) => {
+		this.SetVisibilityFilter(visibilityFilter);
+		this.setState({visibilityFilter:visibilityFilter});
 	}
-
-	deleteCompletedTasks = () => {
-		let tasks = [...this.state.tasks];
-		for (let i = tasks.length - 1; i >= 0; i--) {
-			if (tasks[i].type === "Completed") tasks.splice(i, 1);
-		}
-		this.SetTask(tasks);
-		this.setState({ tasks: tasks });
-	}
+	// --------------------------------------------
 
 	render() {
 		return (
-			<div>
+			<div className="app">
 				<Input
 					onAddTask = {this.addTask}
-					onAllCompleted={this.allCompletedTask}
+					onMarkAllAsCompletedTasks={this.markAllAsCompletedTasks}
 				/>
 				<List
 					tasks            = {this.state.tasks}
-					viewType         = {this.state.viewType}
+					visibilityFilter         = {this.state.visibilityFilter}
 					onDeleteTask     = {this.deleteTask}
-					onSwitchTaskType = {this.switchTaskType}
-					onEditTask       = {this.editTask}
-					onResetEditTask  = {this.resetEditTask}
-					doubleClickIndex = {this.state.doubleClickIndex}
+					onSwitchVisibilityFilter = {this.switchVisibilityFilter}
+					onSetEditingTaskID       = {this.setEditingTaskID}
+					onResetEditingTaskID  = {this.resetEditingTaskID}
+					onEditTask = {this.editTask}
+					editingTaskID = {this.state.editingTaskID}
 				/>
 				<TodoFooter
 					numOfLeft              = {this.state.numOfLeft}
-					onChangeViewType       = {this.changeViewType}
+					onChangeVisibilityFilter = {this.changeVisibilityFilter}
 					onDeleteCompletedTasks = {this.deleteCompletedTasks}
+					numOfTask = {this.state.tasks.length}					
 				/>
+				<Footer/>
 			</div>
 		);
 	}

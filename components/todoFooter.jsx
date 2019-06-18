@@ -1,13 +1,15 @@
 import React from 'react';
-export default (props) => (
-    <div>
-        <p>{String(props.numOfLeft)} items left</p>
-        <div>
-            <button onClick={() => props.onChangeViewType('All')}>All</button>
-            <button onClick={() => props.onChangeViewType('Active')}>Active</button>
-            <button onClick={() => props.onChangeViewType('Completed')}>Completed</button>
-        </div>
-        <button onClick={() => props.onDeleteCompletedTasks()}>Clear competed</button>
-    </div>
-)
-
+const styleGenerator =  (size) => ({
+    visibility : size ? 'visible' : 'hidden'
+});
+export default (props) => {
+    return  <div>
+                <p>{String(props.numOfLeft)} items left</p>
+                <div>
+                    <button onClick={() => props.onChangeVisibilityFilter('All')}>All</button>
+                    <button onClick={() => props.onChangeVisibilityFilter('Active')}>Active</button>
+                    <button onClick={() => props.onChangeVisibilityFilter('Completed')}>Completed</button>
+                </div>
+                <button style={styleGenerator(props.numOfTask - props.numOfLeft)} onClick={() => props.onDeleteCompletedTasks()}>Clear competed</button>
+            </div>
+}
