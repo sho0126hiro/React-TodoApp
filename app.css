@@ -1,0 +1,27 @@
+body{
+    text-align: center;
+}
+h1{
+    font-size: 80;
+}
+.app{
+    width: 500px;
+    margin:auto;
+}
+.input-container{
+    display:flex;
+}
+.input-box{
+    width: 500px;
+    height: 65px;
+    font-size :25px;
+    font-style: italic;
+    padding : 4px;
+    border: 0px;
+}
+.button{
+    width: 50px;
+    font-size:25px;
+    border: 0px;
+    background-color: #eeeeee    
+}

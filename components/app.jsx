@@ -13,6 +13,7 @@ export default class App extends Component {
 					   visibilityFilter:FILTER_TYPE_ALL,
 					   editingTaskID : -1
 					};
+
 	}
 
 	SaveTasks(task) {
@@ -151,3 +152,4 @@ export default class App extends Component {
 		);
 	}
 }
+

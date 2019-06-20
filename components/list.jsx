@@ -3,6 +3,7 @@ import ListElement from './listElement';
 import {FILTER_TYPE_ALL} from './visibilityFilterType';
 export default (props) => {
     if(props.tasks.length === 0)  return <div></div>
+    // const numOfLeft = props.tasks.filter((item)=> !item.isCompleted).length;
     return (
         <div>
             <ul>
