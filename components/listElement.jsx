@@ -1,17 +1,18 @@
 import React from 'react';
 import ListInput from './listInput'
 export default (props) => {
-    if(props.index === props.editingTaskID) {
+    if(props.task.id === props.editingTaskID) {
         return (
             <div>
                 <ListInput  onResetEditTask = {props.onResetEditTask}
-                            onEditTask = {props.onEditTask}/>
+                            onEditTask = {props.onEditTask}
+                            initial={props.task.value}/>
             </div>
         )
     }
     return (
         <label>
-            {props.value}
+            {props.task.value}
         </label>
     )
 }

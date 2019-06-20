@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class ListInput extends Component {
     constructor(props){
         super(props);
-        this.state = {value:''};
+        this.state = {value:this.props.initial};
     }
     
     changeItem = (event) => {
@@ -20,7 +20,7 @@ export default class ListInput extends Component {
     render() {
         return (
             <div>
-                <input  type="text" 
+                <input  type="text"
                         value={this.state.value}
                         autoFocus={true} 
                         onChange={this.changeItem}

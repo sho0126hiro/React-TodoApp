@@ -1,26 +1,33 @@
 import React from 'react';
 import ListElement from './listElement';
-import {FILTER_TYPE_ALL} from './visibilityFilterType';
+import {FILTER_TYPE_ALL,FILTER_TYPE_ACTIVE,FILTER_TYPE_COMPLETED} from './visibilityFilterType';
 export default (props) => {
     if(props.tasks.length === 0)  return <div></div>
-    // const numOfLeft = props.tasks.filter((item)=> !item.isCompleted).length;
+    let viewTasks = props.tasks;
+    switch(props.visibilityFilter){
+        case FILTER_TYPE_ACTIVE:
+            viewTasks = props.tasks.filter( item => !item.isCompleted);
+            break;
+        case FILTER_TYPE_COMPLETED:
+            viewTasks = props.tasks.filter( item => item.isCompleted);
+            break;
+    }
     return (
         <div>
             <ul>
-                {props.tasks.map((item,i) => {
-                    if(item.visibilityFilter === props.visibilityFilter || props.visibilityFilter == FILTER_TYPE_ALL){                     
-                        return  <li key={i}>
-                                    <button onClick={() => props.onSwitchVisibilityFilter(i)}>✅</button>
-                                    <label onDoubleClick={() => props.onSetEditingTaskID(i)}>
-                                        <ListElement value={item.value} 
-                                                     index={i}
-                                                     editingTaskID={props.editingTaskID}
-                                                     onResetEditTask ={props.onResetEditingTaskID}
-                                                     onEditTask = {props.onEditTask}/>
-                                    </label>
-                                    <button onClick={() => props.onDeleteTask(i)}>x</button>
-                                </li>
-                    }
+                {viewTasks.map((item,i) => {
+                    return <li key={item.id}>
+                                <button onClick={() => props.onToggleIsCompleted(item.id)}>✅</button>
+                                <label onDoubleClick={() => props.onSetEditingTaskID(item.id)}>
+                                    <ListElement 
+                                                task={item}
+                                                value={item.value}
+                                                editingTaskID={props.editingTaskID}
+                                                onResetEditTask ={props.onResetEditingTaskID}
+                                                onEditTask = {props.onEditTask}/>
+                                </label>
+                                <button onClick={() => props.onDeleteTask(item.id)}>x</button>
+                            </li>
                 })}
             </ul>     
         </div>

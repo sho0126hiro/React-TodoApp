@@ -10,10 +10,10 @@ export default class Input extends Component {
         this.setState({value:event.target.value});
     }
 
-    addItem(event){
+    async addItem(event){
         if(event.key === 'Enter'){
             this.props.onAddTask(this.state.value);
-            this.setState({value:''});
+            await this.setState({value:''});
         }
     }
     render() {
