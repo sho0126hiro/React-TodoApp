@@ -12,7 +12,7 @@ export default class ListInput extends Component {
 
     addItem(event){
         if(event.key === 'Enter'){
-            this.props.onUpdateEditingTask(this.state.value);
+            if(this.state.value != '' ) this.props.onUpdateEditingTask(this.state.value);
             this.setState({value:''});
             event.target.blur()
         }
@@ -20,7 +20,8 @@ export default class ListInput extends Component {
     render() {
         return (
             <div>
-                <input  type="text"
+                <input  className="todo-list-input"
+                        type="text"
                         value={this.state.value}
                         autoFocus={true} 
                         onChange={this.changeItem}

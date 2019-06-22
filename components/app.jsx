@@ -86,9 +86,15 @@ export default class App extends Component {
 
 	markAllAsCompletedTasks = () => {
 		let tasks = [...this.state.tasks];
-		tasks.forEach((item,i)=>{
-			if(!item.isCompleted) item.isCompleted = true;
-		});
+		if(this.getActiveTasks().length){
+			tasks.forEach((item,i) => {
+				item.isCompleted = true;
+			});
+		}else{
+			tasks.forEach((item) => {
+				item.isCompleted = false;
+			})
+		}
 		this.setState({tasks});
 		this.SaveTasks(tasks);
 	}
@@ -131,26 +137,28 @@ export default class App extends Component {
 	render() {
 		return (
 			<div className="app">
-				<Input
-					onAddTask = {this.addTask}
-					onMarkAllAsCompletedTasks={this.markAllAsCompletedTasks}
-				/>
-				<List
-					viewTasks = {this.getListViewTasks()}
-					visibilityFilte = {this.state.visibilityFilter}
-					onDeleteTask = {this.deleteTask}
-					onToggleIsCompleted = {this.toggleIsCompleted}
-					onSetEditingTaskID = {this.setEditingTaskID}
-					onResetEditingTaskID = {this.resetEditingTaskID}
-					onUpdateEditingTask = {this.updateEditingTask}
-					editingTaskID = {this.state.editingTaskID}
-				/>
-				<TodoFooter
-					tasks = {this.state.tasks}
-					onChangeVisibilityFilter = {this.changeVisibilityFilter}
-					onDeleteCompletedTasks = {this.deleteCompletedTasks}
-					numOfLeft = {this.getActiveTasks().length}					
-				/>
+				<div className="app-main">
+					<Input
+						onAddTask = {this.addTask}
+						onMarkAllAsCompletedTasks={this.markAllAsCompletedTasks}
+					/>
+					<List
+						viewTasks = {this.getListViewTasks()}
+						onDeleteTask = {this.deleteTask}
+						onToggleIsCompleted = {this.toggleIsCompleted}
+						onSetEditingTaskID = {this.setEditingTaskID}
+						onResetEditingTaskID = {this.resetEditingTaskID}
+						onUpdateEditingTask = {this.updateEditingTask}
+						editingTaskID = {this.state.editingTaskID}
+					/>
+					<TodoFooter
+						tasks = {this.state.tasks}
+						visibilityFilter = {this.state.visibilityFilter}
+						onChangeVisibilityFilter = {this.changeVisibilityFilter}
+						onDeleteCompletedTasks = {this.deleteCompletedTasks}
+						numOfLeft = {this.getActiveTasks().length}					
+					/>
+				</div>
 				<Footer/>
 			</div>
 		);

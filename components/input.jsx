@@ -12,15 +12,15 @@ export default class Input extends Component {
 
     async addItem(event){
         if(event.key === 'Enter'){
-            this.props.onAddTask(this.state.value);
+            if(this.state.value != '')this.props.onAddTask(this.state.value);
             await this.setState({value:''});
         }
     }
     render() {
         return (
             <div className="input-container">
-                <button className="button"
-                        onClick={() => this.props.onMarkAllAsCompletedTasks()}>v</button>
+                <button className="completed-button"
+                        onClick={() => this.props.onMarkAllAsCompletedTasks()}>∨</button>
                 <input  type="text" 
                         value={this.state.value} 
                         placeholder="What needs to be done?"

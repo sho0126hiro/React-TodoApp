@@ -1,12 +1,27 @@
 body{
     text-align: center;
+    background-color: #eeeeee;
 }
 h1{
-    font-size: 80;
+    font-size: 90px;
+    margin-top:10px;
+    margin-bottom:-10px;
+    color:#eccbd2;
+    font-weight: lighter;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
 }
 .app{
     width: 500px;
     margin:auto;
+    background-color: #ffffff;
+}
+.app-main{
+    padding:20px;
 }
 .input-container{
     display:flex;
@@ -15,13 +30,114 @@ h1{
     width: 500px;
     height: 65px;
     font-size :25px;
-    font-style: italic;
+    font-style: normal;
     padding : 4px;
     border: 0px;
+    outline: none;
+    color:#999999;
 }
-.button{
+.input-box::placeholder{
+    font-style: italic;
+}
+.completed-button{
     width: 50px;
     font-size:25px;
+    color:#999999;
     border: 0px;
-    background-color: #eeeeee    
+    background-color: #ffffff;
+    outline: none;
+}
+.todo-list{
+    padding:0;
+}
+.todo-list-element{
+    display: flex;
+    padding-top:5px;
+    padding-bottom:5px;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    border-bottom:1px solid;
+}
+.todo-check-button{
+    width:30px;
+    height:30px;
+    font-size:0px;
+    border: solid 1px #7DCFB6;
+    border-radius: 50%;
+    background-color: #ffffff;
+    margin:10px;
+    outline: none;
+}
+.todo-check-button.is-completed{
+    font-size:20px;
+    color:#7DCFB6;
+}
+.todo-value{
+    flex:8;
+    text-align:left;
+    font-size: 18px;
+    padding-left: 10px;
+    word-break: break-all;
+    overflow: auto;
+}
+.todo-check-button.is-completed + .todo-value{
+    text-decoration: line-through;
+    color: #999999;
+}
+.todo-delete-button{
+    flex:1;
+    visibility: hidden;
+    font-size: 20px;
+    border:0px;
+    background-color: #ffffff;
+    color:#555555;
+    outline: none;
+}
+.todo-list-element:hover > .todo-delete-button{
+    visibility: visible;
+    color: #cc9a9a;
+}
+
+.todo-list-input{
+    height: 50px;
+    outline: 0px;
+    width:100%;
+    border : 1px solid ;
+    font-size:18px;
+    padding-left: 10px;
+}
+
+.todo-footer{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size:  15px;
+    color: #555555;
+}
+
+.filter-button{
+    background-color: #ffffff;
+    color: #555555;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    padding:6px;
+    margin:4px;
+    font-size: 15px;
+    outline: none;
+}
+.filter-button:hover{
+    border:1px solid #FEDFE1;
+}
+.filter-button.current{
+    border:1px solid #F8C3CD;
+}
+.filter-button.is-visible{
+    visibility: hidden;
+}
+.footer{
+    font-size:10px;
+    color: #555555;
+    background-color: #eeeeee;
+    padding:20px;
 }
