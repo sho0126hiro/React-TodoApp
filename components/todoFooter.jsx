@@ -10,6 +10,6 @@ export default (props) => {
                     <button onClick={() => props.onChangeVisibilityFilter('Active')}>Active</button>
                     <button onClick={() => props.onChangeVisibilityFilter('Completed')}>Completed</button>
                 </div>
-                <button style={styleGenerator(props.numOfTask - props.numOfLeft)} onClick={() => props.onDeleteCompletedTasks()}>Clear competed</button>
+                <button style={styleGenerator(props.tasks.length - props.numOfLeft)} onClick={() => props.onDeleteCompletedTasks()}>Clear competed</button>
             </div>
 }

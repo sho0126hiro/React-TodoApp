@@ -4,69 +4,65 @@ import List from './list';
 import TodoFooter from './todoFooter';
 import { FILTER_TYPE_ALL, FILTER_TYPE_ACTIVE, FILTER_TYPE_COMPLETED} from './visibilityFilterType'
 import Footer from './footer';
-import { runInNewContext } from 'vm';
 
 export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { tasks: [], 
-					   taskIDMax:0,
-					   numOfLeft: 0, 
 					   visibilityFilter:FILTER_TYPE_ALL,
 					   editingTaskID : -1,
 					};
 	}
 
-	SaveTasks() {
-		localStorage.setItem('tasks', JSON.stringify(this.state.tasks));
+	SaveTasks(tasks) {
+		localStorage.setItem('tasks', JSON.stringify(tasks));
 	}
 	LoadTasks() {
 		return JSON.parse(localStorage.getItem('tasks'));
 	}
-	SetVisibilityFilter(){
-		localStorage.setItem('visibilityFilter',this.state.visibilityFilter);
+	SetVisibilityFilter(visibilityFilter){
+		localStorage.setItem('visibilityFilter',visibilityFilter);
 	}
 	GetVisibilityFilter(){
 		return localStorage.getItem('visibilityFilter');
 	}
-	LoadTaskIDMax(){
-		return JSON.parse(localStorage.getItem('taskIDMax'));
-	}
-	async SaveTaskIDMax(){
-		if(this.state.taskIDMax>=Number.MAX_SAFE_INTEGER){
-			await this.setState({taskIDMax:0});
-		}
-		localStorage.setItem('taskIDMax',this.state.taskIDMax);
-	}
 
 	componentDidMount(){
 		let tasks = this.LoadTasks() || [];
-		let taskIDMax = this.LoadTaskIDMax() || 0;
 		let numOfLeft = tasks.filter((item)=> !item.isCompleted).length;
 		let visibilityFilter = this.GetVisibilityFilter() || FILTER_TYPE_ALL;
-		this.setState({tasks,numOfLeft,visibilityFilter,taskIDMax});
+		this.setState({tasks,numOfLeft,visibilityFilter});
 	}
 
-	addTask = async(value) => {
+	getActiveTasks = () => {
+		return this.state.tasks.filter((item) => !item.isCompleted);
+	}
+
+	getTaskIDMax = () => {
+		if(this.state.tasks.length){
+			return Math.max.apply(null,this.state.tasks.map((item)=>(item.id)))
+		}else{
+			return 1;
+		}
+	}
+
+	addTask = (value) => {
 		let tasks = [...this.state.tasks];
 		let item = {
 			value:value,
 			isCompleted : false,
-			id:(this.state.taskIDMax)+1
+			id:this.getTaskIDMax()+1
 		}
 		tasks.push(item);
-		await this.setState({tasks,taskIDMax:this.state.taskIDMax+1});
-		this.SaveTasks();
-		this.SaveTaskIDMax();
-		this.calculateNumOfLeft();
+		this.setState({tasks});
+		this.SaveTasks(tasks);
 	}
 
-	deleteTask = async(id) => {
+	deleteTask = (id) => {
 		let tasks = [...this.state.tasks];
 		let nextTasks = tasks.filter(item => item.id != id);
-		await this.setState({tasks:nextTasks});
-		this.SaveTasks();
-		this.calculateNumOfLeft();
+		this.setState({tasks:nextTasks});
+		this.SaveTasks(nextTasks);
 	}
 
 	setEditingTaskID = (id) => {
@@ -76,52 +72,60 @@ export default class App extends Component {
 	resetEditingTaskID = () => {
 		this.setState({editingTaskID:-1});
 	}
-	//update edtting task
-	editTask = async (value) => {
+
+	updateEditingTask = (value) => {
 		let tasks = [...this.state.tasks];
 		tasks.forEach((item)=>{
 			if(item.id===this.state.editingTaskID) {
 				item.value = value; 
 			}
 		});
-		await this.setState({tasks});
-		this.SaveTasks();
+		this.setState({tasks});
+		this.SaveTasks(tasks);
 	}
 
-	markAllAsCompletedTasks = async() => {
+	markAllAsCompletedTasks = () => {
 		let tasks = [...this.state.tasks];
 		tasks.forEach((item,i)=>{
 			if(!item.isCompleted) item.isCompleted = true;
 		});
-		await this.setState({tasks});
-		this.SaveTasks();
+		this.setState({tasks});
+		this.SaveTasks(tasks);
 	}
 	
-	deleteCompletedTasks = async() => {
+	deleteCompletedTasks = () => {
 		let tasks = [...this.state.tasks];
 		let nextTasks = tasks.filter(item => !item.isCompleted);
-		await this.setState({ tasks: nextTasks });
-		this.SaveTasks();
+		this.setState({ tasks: nextTasks });
+		this.SaveTasks(nextTasks);
 	}
 
-	toggleIsCompleted = async(id) => {
+	toggleIsCompleted = (id) => {
 		let tasks = [...this.state.tasks];
 		tasks.forEach((item,i)=>{
 			if(item.id === id) item.isCompleted = !item.isCompleted;
 		})
-		await this.setState({tasks});
-		this.SaveTasks();
-		this.calculateNumOfLeft();
+		this.setState({tasks});
+		this.SaveTasks(tasks);
 	}
 	
-	changeVisibilityFilter = async(visibilityFilter) => {
-		await this.setState({visibilityFilter:visibilityFilter});
-		this.SetVisibilityFilter();
+	changeVisibilityFilter = (visibilityFilter) => {
+		this.setState({visibilityFilter});
+		this.SetVisibilityFilter(visibilityFilter);
 	}
 
-	calculateNumOfLeft = async() => {
-		let numOfLeft = this.state.tasks.filter((item) => !item.isCompleted).length;
-		await this.setState({numOfLeft});
+	getListViewTasks = () => {
+		if(this.state.tasks.length === 0)  return [];
+    	let viewTasks = this.state.tasks;
+    	switch(this.state.visibilityFilter){
+        	case FILTER_TYPE_ACTIVE:
+            	viewTasks = this.state.tasks.filter( item => !item.isCompleted);
+    	        break;
+        	case FILTER_TYPE_COMPLETED:
+            	viewTasks = this.state.tasks.filter( item => item.isCompleted);
+            	break;
+		}
+		return viewTasks;
 	}
 
 	render() {
@@ -132,25 +136,23 @@ export default class App extends Component {
 					onMarkAllAsCompletedTasks={this.markAllAsCompletedTasks}
 				/>
 				<List
-					tasks            = {this.state.tasks}
-					visibilityFilter         = {this.state.visibilityFilter}
-					onDeleteTask     = {this.deleteTask}
+					viewTasks = {this.getListViewTasks()}
+					visibilityFilte = {this.state.visibilityFilter}
+					onDeleteTask = {this.deleteTask}
 					onToggleIsCompleted = {this.toggleIsCompleted}
-					onSetEditingTaskID       = {this.setEditingTaskID}
-					onResetEditingTaskID  = {this.resetEditingTaskID}
-					onEditTask = {this.editTask}
+					onSetEditingTaskID = {this.setEditingTaskID}
+					onResetEditingTaskID = {this.resetEditingTaskID}
+					onUpdateEditingTask = {this.updateEditingTask}
 					editingTaskID = {this.state.editingTaskID}
-					onCalculateNumOfLeft = {this.calculateNumOfLeft}
 				/>
 				<TodoFooter
-					numOfLeft              = {this.state.numOfLeft}
+					tasks = {this.state.tasks}
 					onChangeVisibilityFilter = {this.changeVisibilityFilter}
 					onDeleteCompletedTasks = {this.deleteCompletedTasks}
-					numOfTask = {this.state.tasks.length}					
+					numOfLeft = {this.getActiveTasks().length}					
 				/>
 				<Footer/>
 			</div>
 		);
 	}
 }
-

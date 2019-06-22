@@ -5,7 +5,7 @@ export default (props) => {
         return (
             <div>
                 <ListInput  onResetEditTask = {props.onResetEditTask}
-                            onEditTask = {props.onEditTask}
+                            onUpdateEditingTask = {props.onUpdateEditingTask}
                             initial={props.task.value}/>
             </div>
         )

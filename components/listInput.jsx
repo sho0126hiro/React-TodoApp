@@ -12,7 +12,7 @@ export default class ListInput extends Component {
 
     addItem(event){
         if(event.key === 'Enter'){
-            this.props.onEditTask(this.state.value);
+            this.props.onUpdateEditingTask(this.state.value);
             this.setState({value:''});
             event.target.blur()
         }
