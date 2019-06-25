@@ -1,11 +1,12 @@
-body{
+html,body{
     text-align: center;
     background-color: #eeeeee;
+    font-family: Arial, Helvetica, sans-serif;
 }
 h1{
     font-size: 90px;
     margin-top:10px;
-    margin-bottom:-10px;
+    margin-bottom:10px;
     color:#eccbd2;
     font-weight: lighter;
 }
@@ -18,10 +19,14 @@ a:hover{
 .app{
     width: 500px;
     margin:auto;
-    background-color: #ffffff;
+    background-color: #eeeeee;
 }
 .app-main{
-    padding:20px;
+    box-shadow: 1px 1px 2px 2px #aaaaaa;
+    margin-bottom: 0px;
+    background-color: #ffffff;
+    position: relative;
+    z-index: 3;
 }
 .input-container{
     display:flex;
@@ -38,6 +43,7 @@ a:hover{
 }
 .input-box::placeholder{
     font-style: italic;
+    color:#dedede;
 }
 .completed-button{
     width: 50px;
@@ -49,6 +55,7 @@ a:hover{
 }
 .todo-list{
     padding:0;
+    margin:0px;
 }
 .todo-list-element{
     display: flex;
@@ -57,7 +64,8 @@ a:hover{
     justify-content: center;
     align-items: center;
     list-style-type: none;
-    border-bottom:1px solid;
+    border-top:1px solid #bbbbbb;
+    position: relative;
 }
 .todo-check-button{
     width:30px;
@@ -73,10 +81,13 @@ a:hover{
     font-size:20px;
     color:#7DCFB6;
 }
+.todo-check-button.isEditing{
+   visibility : hidden;
+}
 .todo-value{
     flex:8;
     text-align:left;
-    font-size: 18px;
+    font-size: 24px;
     padding-left: 10px;
     word-break: break-all;
     overflow: auto;
@@ -100,11 +111,16 @@ a:hover{
 }
 
 .todo-list-input{
-    height: 50px;
+    position:absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50;
     outline: 0px;
-    width:100%;
-    border : 1px solid ;
-    font-size:18px;
+    width:calc(100% - 51px);
+    border : 1px solid #888888;
+    box-shadow:0px 0px 6px #aaaaaa inset;
+    font-size:28px;
     padding-left: 10px;
 }
 
@@ -114,17 +130,29 @@ a:hover{
     align-items: center;
     font-size:  15px;
     color: #555555;
+    text-align: center;
+    padding-left: 12px;
+    padding-right: 8px;
+    border-top:1px solid #bbbbbb;
+}
+.num-of-left{
+    padding:0px;
 }
 
-.filter-button{
+.filter-button,.clear-comp-button{
     background-color: #ffffff;
     color: #555555;
-    border: 1px solid #ffffff;
     border-radius: 5px;
     padding:6px;
     margin:4px;
     font-size: 15px;
     outline: none;
+}
+.filter-button{
+    border: 1px solid #ffffff;
+}
+.clear-comp-button{
+    border : 0px;
 }
 .filter-button:hover{
     border:1px solid #FEDFE1;
@@ -132,12 +160,34 @@ a:hover{
 .filter-button.current{
     border:1px solid #F8C3CD;
 }
-.filter-button.is-visible{
+
+.filter-button.is-visible,.clear-comp-button.is-visible{
     visibility: hidden;
+}
+
+.clear-comp-button:hover{
+    text-decoration: underline;
 }
 .footer{
     font-size:10px;
     color: #555555;
     background-color: #eeeeee;
-    padding:20px;
+    margin:50px;
+}
+.lap1,.lap2{
+    position: relative;
+    margin:auto;
+    background-color: #ffffff;
+    height:4px;
+    border:1px solid #bbbbbb;
+    box-shadow: 1px 1px 1px 1px #bbbbbb;
+}
+.lap1{
+    width:490px;
+    z-index: 2;
+}
+.lap2{
+    width:480px;
+    z-index: 1;
+    border-top:0px;
 }

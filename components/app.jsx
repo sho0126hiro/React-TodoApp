@@ -41,9 +41,8 @@ export default class App extends Component {
 	getTaskIDMax = () => {
 		if(this.state.tasks.length){
 			return Math.max.apply(null,this.state.tasks.map((item)=>(item.id)))
-		}else{
-			return 1;
 		}
+		return 1;
 	}
 
 	addTask = (value) => {
@@ -159,6 +158,8 @@ export default class App extends Component {
 						numOfLeft = {this.getActiveTasks().length}					
 					/>
 				</div>
+				<div class="lap1"></div>
+				<div class="lap2"></div>
 				<Footer/>
 			</div>
 		);
