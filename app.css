@@ -1,4 +1,4 @@
-html,body{
+body{
     text-align: center;
     background-color: #eeeeee;
     font-family: Arial, Helvetica, sans-serif;
@@ -22,7 +22,8 @@ a:hover{
     background-color: #eeeeee;
 }
 .app-main{
-    box-shadow: 1px 1px 2px 2px #aaaaaa;
+    box-shadow: 1px 1px 5px 2px #cccccc,
+                1px 1px 30px 3px #ededed;
     margin-bottom: 0px;
     background-color: #ffffff;
     position: relative;
@@ -39,7 +40,7 @@ a:hover{
     padding : 4px;
     border: 0px;
     outline: none;
-    color:#999999;
+    columns: #555555;
 }
 .input-box::placeholder{
     font-style: italic;
@@ -64,7 +65,7 @@ a:hover{
     justify-content: center;
     align-items: center;
     list-style-type: none;
-    border-top:1px solid #bbbbbb;
+    border-top:1px solid #bfbfbf;
     position: relative;
 }
 .todo-check-button{
@@ -120,7 +121,7 @@ a:hover{
     width:calc(100% - 51px);
     border : 1px solid #888888;
     box-shadow:0px 0px 6px #aaaaaa inset;
-    font-size:28px;
+    font-size:25px;
     padding-left: 10px;
 }
 
@@ -179,8 +180,8 @@ a:hover{
     margin:auto;
     background-color: #ffffff;
     height:4px;
-    border:1px solid #bbbbbb;
-    box-shadow: 1px 1px 1px 1px #bbbbbb;
+    border:1px solid #aaaaaa;
+    box-shadow: 1px 1px 2px 1px #dedede;
 }
 .lap1{
     width:490px;
